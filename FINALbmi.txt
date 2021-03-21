@@ -1,0 +1,61 @@
+         CLIPS (6.30 3/17/15)
+
+CLIPS> (defrule Bmi 
+=>
+(printout t "this project will help you find out your body type depending on your BMI" crlf)
+(printout t "by answering these questions:" crlf)
+(printout t "Enter your height in meter? Example:1.60" crlf)
+(bind ?x (read))
+(printout t "Enter your weight in kg?" crlf)
+(bind ?y (read))
+(if (< (bind ?zbmi (/ ?y (** ?x 2))) 18.5)
+then (printout t "Your Bmi is " ?zbmi ". you are In the underweight range on the BMI chart.recommendations: 
+See your doctor to find out if you have a medical problem that is causing your low weight." crlf)
+else (if (and(> (bind ?zbmi (/ ?y (** ?x 2))) 18.5) (< (bind ?zbmi (/ ?y (** ?x 2))) 24.9))
+then (printout t "Your Bmi is " ?zbmi ". you have Normal weight BMI range.
+recommendations: 
+Your weight is not a problem for your health,
+Good eating and activity habits are still important for your health." crlf)))
+
+(if (and(> (bind ?zbmi (/ ?y (** ?x 2))) 24.9) (< (bind ?zbmi (/ ?y (** ?x 2))) 29.9))
+then (printout t "Your Bmi is " ?zbmi ". You are In the overweight category on the BMI chart.
+recommendations: 
+Your weight may be right for you. But you need to see your doctor to find out if you have health problems that might be related to your weight.
+You have to decrease calories that you have in a day.
+Good eating and activity habits are still important for your health.
+" crlf))
+else (if (> (bind ?zbmi (/ ?y (** ?x 2))) 29.9)
+then (printout t "Your Bmi is " ?zbmi ". you are In the obese category on the BMI chart.
+recommendations: 
+You may need to lose weight to be healthier, as well as change your eating and activity habits.
+it's important to talk to your doctor about weight-related health problems you may have." crlf))))
+
+
+
+
+
+
+
+(if (and(> (bind ?zbmi (/ ?y (** ?x 2))) 18.5) (< (bind ?zbmi (/ ?y (** ?x 2))) 25))
+then (printout t "Your Bmi is " ?zbmi ". you have Normal weight BMI range.
+recommendations: 
+Your weight is not a problem for your health,
+Good eating and activity habits are still important for your health." crlf))
+
+(if (and(= (bind ?zbmi (/ ?y (** ?x 2))) 25) (< (bind ?zbmi (/ ?y (** ?x 2))) 30))
+then (printout t "Your Bmi is " ?zbmi ". You are In the overweight category on the BMI chart.
+recommendations: 
+Your weight may be right for you. But you need to see your doctor to find out if you have health problems that might be related to your weight.
+You have to decrease calories that you have in a day.
+Good eating and activity habits are still important for your health.
+" crlf))
+
+(if (and(= (bind ?zbmi (/ ?y (** ?x 2))) 30) (> (bind ?zbmi (/ ?y (** ?x 2))) 30))
+then (printout t "Your Bmi is " ?zbmi ". you are In the obese category on the BMI chart.
+recommendations: 
+You may need to lose weight to be healthier, as well as change your eating and activity habits.
+it's important to talk to your doctor about weight-related health problems you may have." crlf)))
+
+
+CLIPS> (run)
+

@@ -1,0 +1,152 @@
+         CLIPS (6.30 3/17/15)
+CLIPS> (defrule Bmi 
+(declare (salience 1000))
+=>
+(printout t "This project will help you find out your body type and depending on your BMI will give you the right recommendations " crlf)
+(printout t "Also will let you know about how much calories you need per day" crlf)
+(printout t "by answering these questions:" crlf)
+(printout t "Enter your height in meter? Example:1.60" crlf)
+(bind ?x (read))
+(printout t "Enter your weight in kg?" crlf)
+(bind ?y (read))
+(if (< (bind ?zbmi (/ ?y (** ?x 2))) 18.5)
+then (printout t "Your Bmi is " ?zbmi ". you are In the underweight range on the BMI chart.recommendations: 
+See your doctor to find out if you have a medical problem that is causing your low weight." crlf)
+else (if (and(> (bind ?zbmi (/ ?y (** ?x 2))) 18.5) (< (bind ?zbmi (/ ?y (** ?x 2))) 24.9))
+then (printout t "Your Bmi is " ?zbmi ". you have Normal weight BMI range.
+recommendations: 
+Your weight is not a problem for your health,
+Good eating and activity habits are still important for your health." crlf)))
+
+(if (and(> (bind ?zbmi (/ ?y (** ?x 2))) 24.9) (< (bind ?zbmi (/ ?y (** ?x 2))) 29.9))
+then (printout t "Your Bmi is " ?zbmi ". You are In the overweight category on the BMI chart.
+recommendations: 
+Your weight may be right for you. But you need to see your doctor to find out if you have health problems that might be related to your weight.
+You have to decrease calories that you have in a day.
+Good eating and activity habits are still important for your health.
+" crlf))
+else (if (> (bind ?zbmi (/ ?y (** ?x 2))) 29.9)
+then (printout t "Your Bmi is " ?zbmi ". you are In the obese category on the BMI chart.
+recommendations: 
+You may need to lose weight to be healthier, as well as change your eating and activity habits.
+it's important to talk to your doctor about weight-related health problems you may have." crlf))))
+CLIPS> (defrule activity 
+(declare (salience 400))
+=>
+ (printout t "Are you active? (1-yes active , 0-moderate active)" crlf)
+ (bind ?x (read))
+ (if (= ?x 1)
+then (assert (active yes)) 
+else (assert (active moderate))))
+CLIPS> (defrule gendaer 
+(declare (salience 500))
+=>
+(printout t " ---------------------------------" crlf )
+(printout t " Now to know how much calories you need per day answer the following questions: " crlf)
+ (printout t "Your gender? 1-female 2-male" crlf)
+ (bind ?x (read))
+ (if (= ?x 1)
+then (assert (usergender female)) 
+else (assert (usergender male))))
+CLIPS> (defrule age
+(declare (salience 300))
+=>
+(printout t "Enter your age" crlf)
+(bind ?x (read))
+ (if (and(> ?x 18) (< ?x 26))
+then (assert(userage young)) 
+else (if (and(> ?x 25) (< ?x 51))
+then(assert(userage middle))
+else (assert(userage old)) ) ) )
+CLIPS> (defrule youngfemale-active 
+(userage young)
+(usergender female)
+(active yes)
+=> 
+(printout t "you need 2400 calories per day to maintain your weight. " crlf))
+CLIPS> (defrule youngfemale-moderate  
+(userage young)
+(usergender female)
+(active moderate)
+=> 
+( printout t "you need 2000-2,200 calories per day to maintain your weight. " crlf))
+CLIPS> (defrule middlefemale-active 
+(userage middle)
+(usergender female)
+(active yes)
+=>
+else (printout t "you need 2,200 calories per day to maintain your weight." crlf))
+CLIPS> (defrule middlefemale-moderate  
+(userage middle)
+(usergender female)
+(active moderate)
+=>
+else (printout t "you need 2000 calories per day to maintain your weight." crlf))
+CLIPS> (defrule oldfemale-active 
+(userage old)
+(usergender female)
+(active yes)
+=>
+else (printout t "you need 2000-2200 calories per day to maintain your weight." crlf))
+CLIPS> (defrule oldfemale-moderate  
+(userage old)
+(usergender female)
+(active moderate)
+=>
+else (printout t "you need about 1,800 calories per day to maintain your weight" crlf))
+CLIPS> (defrule youngmale-active 
+(userage young)
+(usergender male)
+(active yes)
+=> 
+(printout t "you need 3,000 calories per day to maintain your weight. " crlf))
+CLIPS> (defrule youngmale-moderate  
+(userage young)
+(usergender male)
+(active moderate)
+=> 
+( printout t "you need 2600-2,800 calories per day to maintain your weight." crlf))
+CLIPS> (defrule middlemale-active 
+(userage middle)
+(usergender male)
+(active yes)
+=>
+else (printout t "you 2,800–3,000 calories per day to maintain your weight." crlf))
+CLIPS> (defrule middlemale-moderate  
+(userage middle)
+(usergender male)
+(active moderate)
+=>
+else (printout t "you need 2400-2,600 calories per day to maintain your weight." crlf))
+CLIPS> (defrule oldmale-active 
+(userage old)
+(usergender male)
+(active yes)
+=>
+else (printout t "you need 2400-2800 calories per day to maintain your weight." crlf))
+CLIPS> (defrule oldmale-moderate 
+(userage old)
+(usergender male)
+(active moderate)
+=>
+else (printout t "you need 2000-2,400 calories per day to maintain your weight." crlf))
+CLIPS> (run)
+This project will help you find out your body type and depending on your BMI will give you the right recommendations 
+Also will let you know about how much calories you need per day
+by answering these questions:
+Enter your height in meter? Example:1.60
+1.70
+Enter your weight in kg?
+35
+Your Bmi is 12.1107266435986. you are In the underweight range on the BMI chart.recommendations: 
+See your doctor to find out if you have a medical problem that is causing your low weight.
+ ---------------------------------
+ Now to know how much calories you need per day answer the following questions: 
+Your gender? 1-female 2-male
+1
+Are you active? (1-yes active , 0-moderate active)
+1
+Enter your age
+45
+you need 2,200 calories per day to maintain your weight.
+CLIPS> 

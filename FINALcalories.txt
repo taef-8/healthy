@@ -1,0 +1,132 @@
+         CLIPS (6.30 3/17/15)
+CLIPS> (defrule activity 
+(declare (salience 400))
+=>
+ (printout t "are you active? (1-yes, 0-moderate)" crlf)
+ (bind ?x (read))
+ (if (= ?x 1)
+then (assert (active yes)) 
+else (assert (active moderate))))
+--------------------------------------------------------------
+(defrule gendaer 
+(declare (salience 500))
+=>
+ (printout t "your gender? 1-female 2-male" crlf)
+ (bind ?x (read))
+ (if (= ?x 1)
+then (assert (usergender female)) 
+else (assert (usergender male))))
+----------------------------------------------------------
+(defrule age
+(declare (salience 300))
+=>
+(printout t "enter your age" crlf)
+(bind ?x (read))
+ (if (and(> ?x 18) (< ?x 26))
+then (assert(userage young)) 
+else (if (and(> ?x 25) (< ?x 51))
+then(assert(userage middle))
+else (assert(userage old)) ) ) )
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+(defrule youngfemale-active 
+(userage young)
+(usergender female)
+(active yes)
+=> 
+(printout t "need 2400 calories per day to maintain your weight. " crlf))
+--------------------
+
+(defrule youngfemale-moderate  
+(userage young)
+(usergender female)
+(active moderate)
+=> 
+( printout t "you need 2000-2,200 calories per day to maintain your weight. " crlf))
+
+-----------------------------------------------------------------------------------------------------------------------------
+(defrule middlefemale-active 
+(userage middle)
+(usergender female)
+(active yes)
+=>
+else (printout t "you need 2,200 calories per day to maintain your weight." crlf))
+----------------------
+(defrule middlefemale-moderate  
+(userage middle)
+(usergender female)
+(active moderate)
+=>
+else (printout t "you need 2000 calories per day to maintain your weight." crlf))
+----------------------------------------------------------------------------------------------------
+(defrule oldfemale-active 
+(userage old)
+(usergender female)
+(active yes)
+=>
+else (printout t "you need 2000-2200 calories per day to maintain your weight." crlf))
+--------------
+(defrule oldfemale-moderate  
+(userage old)
+(usergender female)
+(active moderate)
+=>
+else (printout t "you need about 1,800 calories per day to maintain your weight" crlf))
+---------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+
+(defrule youngmale-active 
+(userage young)
+(usergender male)
+(active yes)
+=> 
+(printout t "you need 3,000 calories per day to maintain your weight. " crlf))
+--------------------
+
+(defrule youngmale-moderate  
+(userage young)
+(usergender male)
+(active moderate)
+=> 
+( printout t "you need 2600-2,800 calories per day to maintain your weight." crlf))
+
+-----------------------------------------------------------------------------------------------------------------------------
+(defrule middlemale-active 
+(userage middle)
+(usergender male)
+(active yes)
+=>
+else (printout t "you 2,800–3,000 calories per day to maintain your weight." crlf))
+----------------------
+(defrule middlemale-moderate  
+(userage middle)
+(usergender male)
+(active moderate)
+=>
+else (printout t "you need 2400-2,600 calories per day to maintain your weight." crlf))
+----------------------------------------------------------------------------------------------------
+(defrule oldmale-active 
+(userage old)
+(usergender male)
+(active yes)
+=>
+else (printout t "you need 2400-2800 calories per day to maintain your weight." crlf))
+--------------
+(defrule oldmale-moderate 
+(userage old)
+(usergender male)
+(active moderate)
+=>
+else (printout t "you need 2000-2,400 calories per day to maintain your weight." crlf))
+------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
